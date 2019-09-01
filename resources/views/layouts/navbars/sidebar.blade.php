@@ -35,13 +35,13 @@
                     </ul>
                 </div> --}}
             </li>
-            {{-- <li @if ($pageSlug == 'icons') class="active " @endif>
-                <a href="#">
+            <li @if ($pageSlug == 'users') class="active " @endif>
+                <a href="{{ route('users.index')}}">
                     <i class="tim-icons icon-atom"></i>
-                    <p>{{ 'Icons' }}</p>
+                    <p>{{ 'Users' }}</p>
                 </a>
             </li>
-            <li @if ($pageSlug == 'maps') class="active " @endif>
+            {{-- <li @if ($pageSlug == 'maps') class="active " @endif>
                 <a href="#">
                     <i class="tim-icons icon-pin"></i>
                     <p>{{ 'Maps' }}</p>
