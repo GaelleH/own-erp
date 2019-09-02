@@ -12,35 +12,35 @@
                 </a>
             </li>
             <li>
-                <a data-toggle="collapse" href="#laravel-examples" aria-expanded="true">
-                    <i class="fab fa-laravel" ></i>
-                    <span class="nav-link-text" >{{ 'Laravel Examples' }}</span>
+                <a data-toggle="collapse" href="#settings" aria-expanded="true">
+                    <i class="tim-icons icon-align-center" ></i>
+                    <span class="nav-link-text" >{{ 'Instellingen' }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
-                {{-- <div class="collapse show" id="laravel-examples">
+                <div class="collapse show" id="settings">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'profile') class="active " @endif>
-                            <a href="#">
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="{{ route('users.index')}}">
                                 <i class="tim-icons icon-single-02"></i>
-                                <p>{{ 'User Profile' }}</p>
+                                <p>{{ 'Users' }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
+                        {{--<li @if ($pageSlug == 'users') class="active " @endif>
                             <a href="#">
                                 <i class="tim-icons icon-bullet-list-67"></i>
                                 <p>{{ 'User Management' }}</p>
                             </a>
-                        </li>
+                        </li>--}}
                     </ul>
-                </div> --}}
+                </div>
             </li>
-            <li @if ($pageSlug == 'users') class="active " @endif>
+            {{--<li @if ($pageSlug == 'users') class="active " @endif>
                 <a href="{{ route('users.index')}}">
                     <i class="tim-icons icon-atom"></i>
                     <p>{{ 'Users' }}</p>
                 </a>
-            </li>
+            </li>——}}
             {{-- <li @if ($pageSlug == 'maps') class="active " @endif>
                 <a href="#">
                     <i class="tim-icons icon-pin"></i>

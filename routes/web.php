@@ -17,7 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('users', 'UserController');
+Route::resources([
+    'clients' => 'ClientController',
+    'users' => 'UserController',
+    ]);
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::get('/search','UserController@search');

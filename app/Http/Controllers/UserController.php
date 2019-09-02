@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use DB;
 use App\User;
 use Carbon\Carbon;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -29,7 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     public function search(Request $request)
@@ -52,6 +54,7 @@ class UserController extends Controller
                                 <i class="fas fa-ellipsis-v"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="users/'. $user->id .'">Show</a>
                                 <a class="dropdown-item" href="users/edit/'. $user->id .'">Edit</a>
                             </div>
                         </div>
@@ -71,6 +74,7 @@ class UserController extends Controller
                                 <i class="fas fa-ellipsis-v"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                <a class="dropdown-item" href="users/'. $user->id .'">Show</a>
                                 <a class="dropdown-item" href="users/edit/'. $user->id .'">Edit</a>
                             </div>
                         </div>
@@ -84,14 +88,17 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\User  $model
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(UserRequest $request, User $model)
     {
-        //
+        $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
+
+        return redirect()->route('users.index')->withStatus(__('De user werd succesvol aangemaakt.'));
     }
 
     /**
@@ -102,7 +109,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+
+        return view('users.show')->with('user', $user);
     }
 
     /**
@@ -113,29 +122,42 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+
+        return view('users.edit')->with('user', $user);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user in storage
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\UserRequest  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, User  $user)
     {
-        //
+        $user->update(
+            $request->merge(['password' => Hash::make($request->get('password'))])
+                ->except([$request->get('password') ? '' : 'password']
+        ));
+
+        return redirect()->route('user.index')->withStatus(__('User successfully updated.'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified user from storage
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(User  $user)
     {
-        //
+        if ($user->id == 1) {
+            return abort(403);
+        }
+
+        $user->delete();
+
+        return redirect()->route('user.index')->withStatus(__('User successfully deleted.'));
     }
 }

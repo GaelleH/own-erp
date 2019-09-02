@@ -43,8 +43,8 @@
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </a>
                                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href="{{ route('users.show', $user) }}">{{ 'Show' }}</a>
                                                 <a class="dropdown-item" href="{{ route('users.edit', $user) }}">{{ 'Edit' }}</a>
-                                                {{-- <a class="dropdown-item" href="{{ route('profile.edit') }}">{{ 'Edit') }}</a> --}}
                                             </div>
                                         </div>
                                     </td>
