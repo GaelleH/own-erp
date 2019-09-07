@@ -11,6 +11,12 @@
                     <p>{{ 'Dashboard' }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'clients') class="active " @endif>
+                <a href="{{ route('clients.index')}}">
+                    <i class="tim-icons icon-single-02"></i>
+                    <p>{{ 'Klanten' }}</p>
+                </a>
+            </li>
             <li>
                 <a data-toggle="collapse" href="#settings" aria-expanded="true">
                     <i class="tim-icons icon-align-center" ></i>
