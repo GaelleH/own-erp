@@ -123,7 +123,9 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = Client::find($id);
+
+        return view('clients.show')->with('client', $client);
     }
 
     /**
@@ -134,7 +136,9 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $client = Client::find($id);
+
+        return view('clients.edit')->with('client', $client);
     }
 
     /**
@@ -146,7 +150,23 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::find($id);
+        $client->first_name = $request->input('first_name');
+        $client->last_name = $request->input('last_name');
+        $client->company_name = $request->input('company_name');
+        $client->email = $request->input('email');
+        $client->street = $request->input('street');
+        $client->number = $request->input('number');
+        $client->box = $request->input('box');
+        $client->postal_code = $request->input('postal_code');
+        $client->city = $request->input('city');
+        $client->phone = $request->input('phone');
+        $client->mobile = $request->input('mobile');
+        $client->type = $request->input('type');
+        $client->save();
+
+        return redirect()->route('clients.index')->withStatus(__('De klant werd succesvol aangepast.'));
+
     }
 
     /**
@@ -157,6 +177,9 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $client = Client::find($id);
+        $client->delete();
+
+        return redirect()->route('clients.index')->withStatus(__('De klant werd verwijderd.'));
     }
 }
