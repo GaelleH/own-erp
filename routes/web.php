@@ -19,8 +19,12 @@ Auth::routes();
 
 Route::resources([
     'clients' => 'ClientController',
+    'offers' => 'OfferController',
+    'products' => 'ProductController',
     'users' => 'UserController',
     ]);
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::get('/search','UserController@search');
+Route::get('/search-offer','OfferController@search');
+Route::get('/search-product','ProductController@search');

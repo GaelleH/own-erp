@@ -17,6 +17,18 @@
                     <p>{{ 'Klanten' }}</p>
                 </a>
             </li>
+            <li @if ($pageSlug == 'offers') class="active " @endif>
+                <a href="{{ route('offers.index')}}">
+                    <i class="tim-icons icon-attach-87"></i>
+                    <p>{{ 'Offertes' }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'products') class="active " @endif>
+                <a href="{{ route('products.index')}}">
+                    <i class="tim-icons icon-cart"></i>
+                    <p>{{ 'Producten' }}</p>
+                </a>
+            </li>
             <li>
                 <a data-toggle="collapse" href="#settings" aria-expanded="true">
                     <i class="tim-icons icon-align-center" ></i>
