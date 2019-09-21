@@ -111,7 +111,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('products.show')->with('product', $product);
     }
 
     /**
@@ -122,7 +124,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('products.edit')->with('product', $product);
     }
 
     /**
@@ -134,7 +138,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $product->description = $request->input('description');
+        $product->name = $request->input('name');
+        $product->remarks = $request->input('remarks');
+        $product->sale_price = $request->input('sale_price');
+        $product->save();
+
+        return redirect()->route('products.index')->withStatus(__('Het product werd succesvol aangepast.'));
     }
 
     /**
@@ -145,6 +156,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+
+        return redirect()->route('products.index')->withStatus(__('Het product werd verwijderd.'));
     }
 }
