@@ -6,6 +6,7 @@ use App\Http\Requests\OfferRequest;
 use Illuminate\Http\Request;
 use App\Client;
 use App\Offer;
+use App\Product;
 use Carbon\Carbon;
 use DB;
 
@@ -138,7 +139,9 @@ class OfferController extends Controller
     {
         $offer = Offer::find($id);
         $clients = Client::all();
+        $products = Product::all();
         view()->share('clients', $clients);
+        view()->share('products', $products);
 
         return view('offers.edit')->with('offer', $offer);
     }
@@ -175,6 +178,18 @@ class OfferController extends Controller
         } else {
             $offer->number_value = $maxNumberValue + 1;
             $offer->number = sprintf('%0d%04d', Carbon::now()->format('y'), $offer->number_value);
+        }
+    }
+
+    public function getProduct(Request $request)
+    {
+        if($request->ajax()) {
+            $allProducts = DB::table('products')->get();
+            $product = DB::table('products')
+                ->where('id','=',$request->product)
+                ->first();
+
+            return $product->sale_price;
         }
     }
 }

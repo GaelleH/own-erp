@@ -24,7 +24,7 @@
                                         <a class="nav-link active" href="#information" role="tab" data-toggle="tab">Informatie</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#profile" role="tab" data-toggle="tab">Profile</a>
+                                        <a class="nav-link" href="#profile" role="tab" data-toggle="tab">Producten</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#messages" role="tab" data-toggle="tab">Messages</a>
@@ -69,27 +69,83 @@
                                                 </div>
                                             </div>
                                         </div>
-        
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-success mt-4">{{ 'Opslaan' }}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="profile">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="heading-small text-muted mb-4">{{ 'Producten' }}</h6>
+                                    <div class="pl-lg-4">
+                                        <div class="table-responsive">  
+                                            <table class="table" id="dynamic_field">  
+                                                <?php $count = 0; ?>
+                                                <thead>
+                                                    <th class="col-4">{{ 'Product' }}</th>
+                                                    <th class="col-1">{{ 'Hoeveelheid' }}</th>
+                                                    <th class="col-4">{{ 'Opmerkingen' }}</th>
+                                                    <th class="col-1"></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="products-<?= $count ?>">  
+                                                        <td>
+                                                            <select name="product_id" id="rows[<?= $count ?>][product_id]" class="product form-control date_list">
+                                                                @foreach($products as $product)
+                                                                <option value="{{ $product->id }}">{{ $product->name }} - €{{ $product->sale_price }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>  
+                                                        <td><input type="number" name="rows[<?= $count ?>][amount]" class="form-control date_list" placeholder="0"/></td>  
+                                                        <td><input type="text" name="rows[<?= $count ?>][remarks]" class="form-control date_list"/></td>  
+                                                        <td><button type="button" name="add" id="add" class="btn btn-primary"><i class="tim-icons icon-simple-add"></i></button></td>  
+                                                    </tr>  
+                                                    <?php $count++; ?>
+                                                </tbody>
+                                            </table>  
+                                            <button type="submit" class="btn btn-info btn-fill pull-right">Opslaan</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="profile">2</div>
                         <div role="tabpanel" class="tab-pane" id="messages">3</div>
+                    </div>
+                    <div class="text-left">
+                        <button type="submit" class="btn btn-success">{{ 'Opslaan' }}</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     </div>
+    <?php dump($count)?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script type="text/javascript">
+        var count = <?= $count ?>;
+
         $(function () {
             $('#myTab li:first-child a').tab('show')
         });
+
+        $('.product').on('click',function(){
+            $value = $(this).val();
+            $.ajax({
+                type : 'get',
+                url : '{{URL::to('get-product')}}',
+                data:{'product':$value},
+                success:function(data){
+                    console.log(data);
+
+                    // document.getElementById("row[" + count + "][sale_price]").value = data;
+                    // $('tr.products-' + count + ' .row[' + count + '][sale_price]"]').val(data);
+                    // $('tbody').html(data);
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
     </script>
 @endsection

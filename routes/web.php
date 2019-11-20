@@ -28,3 +28,4 @@ Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 Route::get('/search','UserController@search');
 Route::get('/search-offer','OfferController@search');
 Route::get('/search-product','ProductController@search');
+Route::get('/get-product','OfferController@getProduct');
